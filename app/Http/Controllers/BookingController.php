@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\TimeSlotGenerator;
 use App\Models\Schedule;
-use Carbon\CarbonInterval;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -12,8 +12,9 @@ class BookingController extends Controller
     public function __invoke()
     {
         $schedule = Schedule::find(1);
+        $service = Service::find(1);
 
-        $slots = (new TimeSlotGenerator($schedule))->get();
+        $slots = (new TimeSlotGenerator($schedule, $service))->get();
 
         return view('booking.create', [
             'slots' => $slots
