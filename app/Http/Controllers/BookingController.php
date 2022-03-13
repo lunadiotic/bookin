@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Filters\SlotsPassedTodayFilter;
 use App\Helpers\TimeSlotGenerator;
 use App\Models\Schedule;
 use App\Models\Service;
@@ -14,7 +15,11 @@ class BookingController extends Controller
         $schedule = Schedule::find(1);
         $service = Service::find(1);
 
-        $slots = (new TimeSlotGenerator($schedule, $service))->get();
+        $slots = (new TimeSlotGenerator($schedule, $service))
+            ->applyFilters([
+                new SlotsPassedTodayFilter()
+            ])
+            ->get();
 
         return view('booking.create', [
             'slots' => $slots

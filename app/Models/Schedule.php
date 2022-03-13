@@ -10,7 +10,7 @@ class Schedule extends Model
     use HasFactory;
 
     protected $casts = [
-        'date' => 'datetime',
+        'date' => 'date',
         'start_time' => 'datetime',
         'end_time' => 'datetime',
     ];
